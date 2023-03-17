@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/gogovan/ggx-kr-payment-service/pkg/grpc";
+
+import "message.proto";
+
+service CommonService {
+  rpc PresignedUrl (GetPresignedUrlRequest) returns (GetPresignedUrlResponse) {}
+  rpc GetConfigurationByKey(GetConfigurationByKeyRequest) returns (GetConfigurationByKeyResponse) {}
+  rpc GetRegionById(GetRegionByIdRequest) returns (GetRegionByIdResponse) {}
+}

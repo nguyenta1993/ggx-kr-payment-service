@@ -1,0 +1,65 @@
+serviceName: common_service
+development: true
+database:
+  readDb:
+    connectionString: host=localhost port=5432 user=postgres password=postgres dbname=payment sslmode=disable
+    dbType: postgres
+    migrationFilePath: migrations
+  writeDb:
+    connectionString: host=localhost port=5432 user=postgres password=postgres dbname=payment sslmode=disable
+    dbType: postgres
+    migrationFilePath: migrations
+http:
+  port: :5001
+  development: true
+  shutdownTimeout: 15
+  resources: ["internal/resources/en.json",	"internal/resources/fr.json",	"internal/resources/vi.json"]
+  rateLimiting:
+    rateFormat: "100000-H"
+  allowOrigins: ["https://dev-cw.gogox.co.kr"]
+grpc:
+  port: :5002
+  development: true
+  maxConnectionIdle: 5
+  timeout: 15
+  maxConnectionAge: 5
+  time: 10
+logger:
+  level: debug
+  devMode: false
+  encoder: json
+tracing:
+  enable: false
+  serviceName: user_service
+  hostPort: "localhost:4317"
+  logSpans: false
+kafka:
+  config:
+    brokers: ["localhost:9092"]
+    groupID: user_service_consumer
+    initTopics: false
+    numWorker: 20
+  topics:
+    userUpdate:
+      topicName: user_update
+      numPartitions: 10
+      replicationFactor: 1
+    userUpdated:
+      topicName: user_updated
+      numPartitions: 10
+      replicationFactor: 1
+redis:
+  addrs: ["localhost:6379"]
+  password: ""
+  db: 0
+  poolSize: 300
+heathcheck:
+  interval: 10
+  port: :6001
+  goroutineThreshold: 50
+metrics:
+  prometheusPath: /metrics
+  prometheusPort: :8001
+s3:
+  bucket: "gogox-dev-cw-cms"
+  region: "ap-northeast-2"
